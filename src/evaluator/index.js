@@ -320,7 +320,7 @@ export class Evaluator {
       }
 
       if (!this.bindings.hasOwnProperty(node.value)) {
-        this.panic(`Undefined binding "${node.value}"`)
+        return new TypedValue('unknownParam', '`' + node.value + '`');
       }
 
       const binding = this.bindings[node.value]
