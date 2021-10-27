@@ -3,6 +3,12 @@
 [![Travis branch](https://img.shields.io/travis/aragon/radspec/master.svg?style=flat-square)](https://travis-ci.org/aragon/radspec)
 [![Coveralls github branch](https://img.shields.io/coveralls/github/aragon/radspec/master.svg?style=flat-square)](https://coveralls.io/github/aragon/radspec)
 
+Sourcify fork of [aragon/radspec](https://github.com/aragon/radspec).
+
+## Differences
+
+- Does not throw when no Binding found for an Identifier. Instead writes the identifier name to the output. e.g. `` "Sends `_amount` to `address`" `` throws an error if the passed parameter of function is `amount` not `_amount`. The modified version will show `` "Sends `_amount` to 0x23f..de2" ``.
+
 Radspec is a safe interpreter for dynamic expressions in Ethereum's [NatSpec](https://github.com/ethereum/wiki/wiki/Ethereum-Natural-Specification-Format).
 
 This allows smart contact developers to show improved function documentation to end users, without the [security pitfalls of natspec.js](#aside-why-is-natspecjs-unsafe). Radspec defines its own syntax structure and parses its own AST rather than directly evaluating untrusted JavaScript.
@@ -31,7 +37,7 @@ contract Tree {
 }
 ```
 
-Notice the *dynamic expression* documentation for the `setAge` function. When presented to the end user, this will render based on the inputs provided by the user. For example, if the end user is calling the contract with an input of 10 years, this will be rendered by radspec as:
+Notice the _dynamic expression_ documentation for the `setAge` function. When presented to the end user, this will render based on the inputs provided by the user. For example, if the end user is calling the contract with an input of 10 years, this will be rendered by radspec as:
 
 > Set the tree age to 10 years
 
@@ -45,47 +51,45 @@ This produces the outputs:
 
 ```json
 {
-  "methods" :
-  {
-    "setAge(uint256)" :
-    {
-      "notice" : "Set the tree age to `numYears` years"
+  "methods": {
+    "setAge(uint256)": {
+      "notice": "Set the tree age to `numYears` years"
     }
   }
 }
-
 ```
 
 and
 
 ```json
-[{
-  "constant":false,
-  "inputs":[{"name":"numYears","type":"uint256"}],
-  "name":"setAge",
-  "outputs":[],
-  "payable":false,
-  "stateMutability":"nonpayable",
-  "type":"function"
-}]
+[
+  {
+    "constant": false,
+    "inputs": [{ "name": "numYears", "type": "uint256" }],
+    "name": "setAge",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  }
+]
 ```
 
 Write a simple tool using radspec to interpret this:
 
 ```js
-import radspec from 'radspec'
+import radspec from "radspec";
 
 // Set userDoc and ABI from above
-const expression = userDoc.methods["setAge(uint256)"].notice
+const expression = userDoc.methods["setAge(uint256)"].notice;
 const call = {
   abi: abi,
   transaction: {
-    to: '0x8521742d3f456bd237e312d6e30724960f72517a',
-    data: '0xd5dcf127000000000000000000000000000000000000000000000000000000000000000a'
-  }
-}
-radspec.evaluate(expression, call)
-  .then(console.log) // => "Set the tree age to 10 years"
+    to: "0x8521742d3f456bd237e312d6e30724960f72517a",
+    data: "0xd5dcf127000000000000000000000000000000000000000000000000000000000000000a",
+  },
+};
+radspec.evaluate(expression, call).then(console.log); // => "Set the tree age to 10 years"
 ```
 
 See more examples [here](examples) and in the [tests](test/examples/examples.js).

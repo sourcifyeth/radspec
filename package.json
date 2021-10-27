@@ -1,7 +1,7 @@
 {
-  "name": "radspec",
+  "name": "@ethereum-sourcify/radspec",
   "version": "1.12.0",
-  "description": "Radspec is a safe alternative to Ethereum's natspec",
+  "description": "Radspec is a safe alternative to Ethereum's natspec (Sourcify fork)",
   "main": "dist/index.js",
   "files": [
     "dist"
@@ -23,12 +23,12 @@
     "compiler",
     "ethereum"
   ],
-  "author": "Aragon Association <legal@aragon.org>",
+  "author": "Aragon Association <legal@aragon.org>, Kaan Uzdogan <kaan@ethereum.org>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/aragon/radspec/issues"
+    "url": "https://github.com/sourcifyeth/radspec/issues"
   },
-  "homepage": "https://github.com/aragon/radspec#readme",
+  "homepage": "https://github.com/sourcifyeth/radspec#readme",
   "devDependencies": {
     "@babel/cli": "^7.1.2",
     "@babel/core": "^7.1.2",
