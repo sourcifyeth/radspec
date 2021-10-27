@@ -1,6 +1,6 @@
 {
   "name": "@ethereum-sourcify/radspec",
-  "version": "1.12.0",
+  "version": "1.12.1",
   "description": "Radspec is a safe alternative to Ethereum's natspec (Sourcify fork)",
   "main": "dist/index.js",
   "files": [
